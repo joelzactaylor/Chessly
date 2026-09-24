@@ -411,7 +411,7 @@ function Home({ courses, p }: { courses: CourseCard[]; p: Progress }) {
         </div>
         <div className="hero-art" aria-hidden="true">
           <div className="hero-checkers" />
-          <img src="/pieces/neo/wn.png" alt="" />
+          <img src={`${import.meta.env.BASE_URL}pieces/neo/wn.png`} alt="" />
           <span className="hero-star">✦</span>
         </div>
       </section>
@@ -1363,7 +1363,10 @@ export default function App() {
         if (!r.ok) throw Error("The course library could not be loaded.");
         return r.json();
       })
-      .then(setCourses)
+      .then((data) => setCourses((Array.isArray(data) ? data : []).map((course) => ({
+        ...course,
+        image: course.image?.startsWith("/") ? `${import.meta.env.BASE_URL}${course.image.slice(1)}` : course.image,
+      }))))
       .catch((e) => setError(e.message));
   }, []);
   useEffect(() => {

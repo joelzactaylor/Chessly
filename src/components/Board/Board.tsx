@@ -400,7 +400,7 @@ export default function Board({
               className={`piece${noAnim ? " no-anim" : ""}${drag?.id === p.id ? " dragging" : ""}${p.fading ? " fading" : ""}`}
               style={{
                 transform: pieceTransform(p),
-                backgroundImage: `url(/pieces/neo/${p.color}${p.type}.png)`,
+                backgroundImage: `url(${import.meta.env.BASE_URL}pieces/neo/${p.color}${p.type}.png)`,
                 transition:
                   p.fading || drag?.id === p.id
                     ? "none"
@@ -455,7 +455,7 @@ export default function Board({
                 key={t}
                 aria-label={`Promote to ${{ q: "queen", r: "rook", b: "bishop", n: "knight" }[t]}`}
                 style={{
-                  backgroundImage: `url(/pieces/neo/${promoColor}${t}.png)`,
+                  backgroundImage: `url(${import.meta.env.BASE_URL}pieces/neo/${promoColor}${t}.png)`,
                 }}
                 onPointerDown={(e) => e.stopPropagation()}
                 onClick={() => {

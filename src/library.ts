@@ -100,6 +100,17 @@ export function validProgress(raw: unknown): raw is Progress {
   );
 }
 const cache = new Map<string, Promise<Course>>();
+function normalizeAssetUrl(path: string | undefined) {
+  if (!path || !path.startsWith("/")) return path ?? "";
+  return `${import.meta.env.BASE_URL}${path.slice(1)}`;
+}
+function normalizeCourse(course: Course): Course {
+  if (!course) return course;
+  return {
+    ...course,
+    image: normalizeAssetUrl(course.image),
+  };
+}
 function libraryUrl(id: string, refresh = false) {
   const suffix = refresh ? "&refresh=1" : "";
   return `${import.meta.env.BASE_URL}library/${encodeURIComponent(id)}.json?schema=2${suffix}`;
@@ -121,7 +132,7 @@ export function loadCourse(id: string): Promise<Course> {
             course = await fresh.json();
           }
           if (!course.lessons?.every(s => Array.isArray(s.tiles))) throw Error("Course data is updating. Please reload this page in a moment.");
-          return course;
+          return normalizeCourse(course);
         })
         .catch((e) => {
           cache.delete(id);
