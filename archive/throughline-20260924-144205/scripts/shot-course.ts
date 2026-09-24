@@ -1,0 +1,11 @@
+import { chromium } from 'playwright';
+const browser = await chromium.launch();
+const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+const errors: string[] = [];
+page.on('pageerror', (e) => errors.push(e.message));
+await page.goto('http://localhost:5176/#/course/scandinavian'); await page.waitForSelector('.row'); await page.waitForTimeout(400);
+await page.evaluate(() => window.scrollTo(0, 760)); await page.waitForTimeout(200);
+await page.screenshot({ path: 'scripts/out/shots/60-course-freq.png' });
+await page.goto('http://localhost:5176/#/settings'); await page.waitForTimeout(400);
+console.log('cutoff select present:', await page.locator('text=Skip rare continuations').count(), '| errors:', errors.length ? errors : 'none');
+await browser.close();

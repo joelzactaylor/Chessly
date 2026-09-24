@@ -1,0 +1,37 @@
+{
+  "name": "chess-library",
+  "private": true,
+  "version": "0.1.0",
+  "description": "A private chess course library and opening trainer.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "validate": "tsx scripts/course-learning/test.ts",
+    "course": "tsx scripts/course-learning/cli.ts",
+    "test-course-learning": "tsx scripts/course-learning/test.ts",
+    "course:comet": "tsx scripts/course-learning/learn-comet.ts",
+    "library:publish": "tsx scripts/course-learning/publish-library.ts",
+    "test-ui": "tsx scripts/course-learning/test-ui.ts",
+    "test-path-ui": "tsx scripts/course-learning/test-path-ui.ts",
+    "test-path-parity": "tsx scripts/course-learning/test-path-parity.ts --complete",
+    "test-path-layout": "tsx scripts/course-learning/test-path-layout.ts",
+    "test-practice-progress": "tsx scripts/course-learning/test-interrupted-practice.ts"
+  },
+  "dependencies": {
+    "chess.js": "^1.4.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@vitejs/plugin-react": "^4.3.4",
+    "playwright": "^1.63.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.7"
+  }
+}

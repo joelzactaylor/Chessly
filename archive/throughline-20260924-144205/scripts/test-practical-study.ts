@@ -1,0 +1,24 @@
+import assert from 'node:assert/strict';
+import { explainMove, positionBrief } from '../src/lib/coaching';
+import { reviewGame } from '../src/lib/gameReview';
+import { parseCourse } from '../src/lib/tree';
+import { Chess } from 'chess.js';
+
+const pc = parseCourse({ id: 'test', title: 'test', subtitle: '', side: 'w', description: '', ideas: [], chapters: [{ id: 'g', title: 'g', summary: '', pgn: '1.e4 e5 2.Nc3 Nf6 3.f4' }] });
+assert.deepEqual(pc.errors, []);
+const deviation = reviewGame('1.e4 e5 2.Nf3 Nc6', 'w', pc.lines);
+assert.equal(deviation.matched, 1);
+assert.equal(deviation.deviation?.played, 'Nf3');
+assert.equal(deviation.deviation?.expected.san, 'Nc3');
+assert.equal(reviewGame('1.e4 c5 2.Nf3', 'w', pc.lines).uncovered?.moveNumber, 2);
+assert.equal(reviewGame('1.e4 e5 2.Nc3 Nf6 3.f4', 'w', pc.lines).matched, 3);
+assert.equal(reviewGame('1.e4 e5', 'b', pc.lines).checked, 0, 'do not compare Black against White repertoire moves');
+assert.throws(() => reviewGame('1.e4 e9', 'w', pc.lines));
+assert.match(explainMove(new Chess().fen(), 'Nf3'), /Develop the knight/);
+const capture = new Chess(); capture.loadPgn('1.e4 d5');
+assert.match(explainMove(capture.fen(), 'exd5'), /Capture the pawn on d5/);
+const loose = positionBrief('6k1/pp3ppp/8/8/4q3/8/PP3PPP/4R1K1 w - - 0 20', 'w');
+assert.ok(loose.loose.some((p) => p.square === 'e1'));
+const bareKing = positionBrief('6k1/8/8/8/8/8/8/Q5K1 w - - 0 20', 'w');
+assert.equal(bareKing.sheltered, false, 'g1 alone is not a pawn shelter');
+console.log('PGN review, colour scoping, move explanations and position checkpoints passed.');

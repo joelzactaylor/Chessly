@@ -1,0 +1,34 @@
+{
+  "name": "throughline",
+  "private": true,
+  "version": "0.1.0",
+  "description": "One move per position. A single-line chess opening trainer.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "validate": "tsx scripts/validate.ts",
+    "engine-check": "tsx scripts/engine-check.ts",
+    "course": "tsx scripts/course-learning/cli.ts",
+    "test-course-learning": "tsx scripts/course-learning/test.ts",
+    "course:comet": "tsx scripts/course-learning/learn-comet.ts"
+  },
+  "dependencies": {
+    "chess.js": "^1.4.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "stockfish": "^17.1.0",
+    "zustand": "^5.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@vitejs/plugin-react": "^4.3.4",
+    "playwright": "^1.63.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.7"
+  }
+}
